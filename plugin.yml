@@ -1,0 +1,19 @@
+name: PluginTest
+author: Yarkis
+version: 0.1
+main: fr.yarkis.plugintest.Main
+api-version: 1.13
+
+commands:
+   pioche:
+      description: Donne une pioche cheat
+      usage: /<command>
+   bow-tp:
+      description: Donne un arc pour te tp
+      usage: /<command>
+   bow:
+      description: Donne un arc qui dire droit
+      usage: /<command>
+   totem:
+      description: Un totem permettant de réparer tous les objets dans votre inventaire
+      usage: /<command>
