@@ -2,6 +2,7 @@ package fr.yarkis.plugintest;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.yarkis.plugintest.commands.GiveArcQuiTireToutDroit;
 import fr.yarkis.plugintest.commands.GiveBow;
 import fr.yarkis.plugintest.commands.GivePickaxe;
 import fr.yarkis.plugintest.commands.GiveTotem;
@@ -16,7 +17,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new DiamondPickaxe(this), this);
 		
 		// Bow TP
-		this.getCommand("bow").setExecutor(new GiveBow());
+		this.getCommand("bow-tp").setExecutor(new GiveBow());
 		getServer().getPluginManager().registerEvents(new BowTP(), this);
 		
 		// Aether Pearl
@@ -25,6 +26,10 @@ public class Main extends JavaPlugin {
 		// Totem de réparation
 		this.getCommand("totem").setExecutor(new GiveTotem());
 		getServer().getPluginManager().registerEvents(new TotemReparateur(this), this);
+		
+		// Arc qui tire droit
+		this.getCommand("bow").setExecutor(new GiveArcQuiTireToutDroit());
+		getServer().getPluginManager().registerEvents(new ArcQuiTireToutDroit(), this);
 		
 		System.out.println("Plugin start");
 	}
