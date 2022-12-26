@@ -2,6 +2,7 @@ package fr.yarkis.plugintest.commands;
 
 import java.util.Arrays;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,7 +21,7 @@ public class GivePickaxe implements CommandExecutor {
 			ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE);
 			ItemMeta  meta    = pickaxe.getItemMeta();
 			
-			meta.setDisplayName("Pioche Cheaté");
+			meta.setDisplayName(ChatColor.RED + "Pioche Cheaté");
 			meta.setUnbreakable(true);
 			meta.setLore(Arrays.asList("Explosion: 1/10", "Haste: 1/5", "Speed: 1/5"));
 			

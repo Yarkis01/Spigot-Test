@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -43,7 +44,7 @@ public class DiamondPickaxe implements Listener {
 						 return;
 					 }
 					 
-					 if(item.getItemMeta().getDisplayName().equals("Pioche Cheaté")) {
+					 if(item.getItemMeta().getDisplayName().equals(ChatColor.RED + "Pioche Cheaté")) {
 						 ItemMeta meta = item.getItemMeta();
 						 
 						 Integer haste_level = Integer.parseInt(meta.getLore().get(1).replace("Haste: ", "").replace("/5", "")) - 1;
@@ -138,7 +139,7 @@ public class DiamondPickaxe implements Listener {
 		if(item.getType().equals(Material.DIAMOND_PICKAXE)) {
 			ItemMeta meta = item.getItemMeta();
 			
-			if(!meta.getDisplayName().equals("Pioche Cheaté")) {
+			if(!meta.getDisplayName().equals(ChatColor.RED + "Pioche Cheaté")) {
 				return;
 			}
 	
@@ -149,8 +150,18 @@ public class DiamondPickaxe implements Listener {
 				
 				player.openInventory(inventory);
 			}
-			if(event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-				player.getWorld().createExplosion(event.getClickedBlock().getLocation(), Float.parseFloat(meta.getLore().get(0).replace("Explosion: ", "").replace("/10", "")));
+		}
+	}
+	
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent event) {
+		Player player = event.getPlayer();
+		
+		if(player.getInventory().getItemInMainHand().getType().equals(Material.DIAMOND_PICKAXE)) {
+			ItemStack pickaxe = player.getInventory().getItemInMainHand();
+			
+			if(pickaxe.getItemMeta().getDisplayName() != null && pickaxe.getItemMeta().getDisplayName().equals(ChatColor.RED + "Pioche Cheaté")) {
+				player.getWorld().createExplosion(event.getBlock().getLocation(), Float.parseFloat(pickaxe.getItemMeta().getLore().get(0).replace("Explosion: ", "").replace("/10", "")));
 			}
 		}
 	}
