@@ -2,6 +2,7 @@ package fr.yarkis.plugintest.commands;
 
 import java.util.Arrays;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,7 +21,7 @@ public class GiveBow implements CommandExecutor {
 			ItemStack bow = new ItemStack(Material.BOW);
 			ItemMeta meta = bow.getItemMeta();
 			
-			meta.setDisplayName("Teleportation");
+			meta.setDisplayName(ChatColor.YELLOW + "ArcTP");
 			meta.setLore(Arrays.asList("Permet de téléporter ton gros cul là"));
 			
 			bow.setItemMeta(meta);

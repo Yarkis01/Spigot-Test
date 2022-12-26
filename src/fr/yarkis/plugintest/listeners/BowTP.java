@@ -8,30 +8,51 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class BowTP implements Listener {
 	
 	@EventHandler
-	public void onProjectileHit(ProjectileHitEvent event) {
-		if(event.getEntityType().equals(EntityType.ARROW)) {
-			Arrow arrow = (Arrow)event.getEntity();
+	public void onProjectileLaunch(ProjectileLaunchEvent event) {
+		if(event.getEntityType() != EntityType.ARROW) {
+			return;
+		}
+		
+		Arrow arrow = (Arrow)event.getEntity();
+		
+		if(arrow.getShooter() instanceof Player) {
+			Player player = (Player)arrow.getShooter();
 			
-			if (arrow.getShooter() instanceof Player) {
-				Player player = (Player) arrow.getShooter();
+			ItemStack bow;
+			if(player.getInventory().getItemInMainHand().getType().equals(Material.BOW) || player.getInventory().getItemInMainHand().getType().equals(Material.CROSSBOW)) {
+				bow = player.getInventory().getItemInMainHand();
+			} else {
+				bow = player.getInventory().getItemInOffHand();
+			}
+
+			if(bow.getItemMeta().getDisplayName() != null && bow.getItemMeta().getDisplayName().equals(ChatColor.YELLOW + "ArcTP")) {
+				arrow.setCustomName("ArrowTP");
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onProjectileHit(ProjectileHitEvent event) {
+		if(event.getEntityType() != EntityType.ARROW) {
+			return;
+		}
+		
+		Arrow arrow = (Arrow)event.getEntity();
+		
+		if(arrow.getShooter() instanceof Player) {
+			Player player = (Player)arrow.getShooter();
+			
+			if(arrow.getCustomName() != null && arrow.getCustomName().equals("ArrowTP")) {
+				arrow.remove();
 				
-				ItemStack bow;
-				if(player.getInventory().getItemInMainHand().getType().equals(Material.BOW)) {
-					bow = player.getInventory().getItemInMainHand();
-				} else {
-					bow = player.getInventory().getItemInOffHand();
-				}
-				
-				if(bow.getItemMeta().getDisplayName().equals("Teleportation")) {
-					arrow.remove();
-					player.teleport(arrow.getLocation());
-					player.sendMessage(ChatColor.GREEN + "Téléportation !");
-				}
+				player.teleport(arrow.getLocation());
+				player.sendMessage(ChatColor.GREEN + "Téléporté !");
 			}
 		}
 	}

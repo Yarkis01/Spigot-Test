@@ -20,22 +20,20 @@ public class ArcQuiTireToutDroit implements Listener {
 		
 		Arrow arrow = (Arrow)event.getEntity();
 		
-		if(!(arrow.getShooter() instanceof Player)) {
-			return;
-		}
-		
-		Player player = (Player)arrow.getShooter();
-		
-		ItemStack bow;
-		if(player.getInventory().getItemInMainHand().getType().equals(Material.BOW)) {
-			bow = player.getInventory().getItemInMainHand();
-		} else {
-			bow = player.getInventory().getItemInOffHand();
-		}
-		
-		if(bow.getItemMeta().getDisplayName().equals(ChatColor.BLUE + "Arc")) {
-			arrow.setGravity(false);
-			arrow.setVelocity(player.getLocation().getDirection().multiply(2.0D));
+		if(arrow.getShooter() instanceof Player) {
+			Player player = (Player)arrow.getShooter();
+			
+			ItemStack bow;
+			if(player.getInventory().getItemInMainHand().getType().equals(Material.BOW) || player.getInventory().getItemInMainHand().getType().equals(Material.CROSSBOW)) {
+				bow = player.getInventory().getItemInMainHand();
+			} else {
+				bow = player.getInventory().getItemInOffHand();
+			}
+			
+			if(bow.getItemMeta().getDisplayName() != null && bow.getItemMeta().getDisplayName().equals(ChatColor.BLUE + "Arc")) {
+				arrow.setGravity(false);
+				arrow.setVelocity(player.getLocation().getDirection().multiply(2.0D));
+			}
 		}
 	}
 	
