@@ -20,3 +20,6 @@ commands:
    aether-pearl:
       description: Une perle pas comme les autres
       usage: /<command>
+   grappin:
+      description: Un grappin tout simple
+      usage: /<command>

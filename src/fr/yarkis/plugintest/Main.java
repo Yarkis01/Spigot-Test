@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.yarkis.plugintest.commands.GiveAetherPearl;
 import fr.yarkis.plugintest.commands.GiveArcQuiTireToutDroit;
 import fr.yarkis.plugintest.commands.GiveBow;
+import fr.yarkis.plugintest.commands.GiveGrappin;
 import fr.yarkis.plugintest.commands.GivePickaxe;
 import fr.yarkis.plugintest.commands.GiveTotem;
 import fr.yarkis.plugintest.listeners.*;
@@ -32,6 +33,10 @@ public class Main extends JavaPlugin {
 		// Arc qui tire droit
 		this.getCommand("bow").setExecutor(new GiveArcQuiTireToutDroit());
 		getServer().getPluginManager().registerEvents(new ArcQuiTireToutDroit(), this);
+		
+		// Grappin
+		this.getCommand("grappin").setExecutor(new GiveGrappin());
+		getServer().getPluginManager().registerEvents(new Grappin(), this);
 		
 		System.out.println("Plugin start");
 	}
