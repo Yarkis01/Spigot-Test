@@ -38,6 +38,9 @@ public class Main extends JavaPlugin {
 		this.getCommand("grappin").setExecutor(new GiveGrappin());
 		getServer().getPluginManager().registerEvents(new Grappin(), this);
 		
+		// Explosion des creepers
+		getServer().getPluginManager().registerEvents(new DisablingCreepersExplosion(), this);
+		
 		System.out.println("Plugin start");
 	}
 	
