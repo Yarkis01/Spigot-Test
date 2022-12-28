@@ -23,3 +23,6 @@ commands:
    grappin:
       description: Un grappin tout simple
       usage: /<command>
+   blackhole:
+      description: Donne l'objet pour faire spawn un trou noir
+      usage: /<command>

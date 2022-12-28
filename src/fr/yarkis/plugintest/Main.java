@@ -2,12 +2,7 @@ package fr.yarkis.plugintest;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.yarkis.plugintest.commands.GiveAetherPearl;
-import fr.yarkis.plugintest.commands.GiveArcQuiTireToutDroit;
-import fr.yarkis.plugintest.commands.GiveBow;
-import fr.yarkis.plugintest.commands.GiveGrappin;
-import fr.yarkis.plugintest.commands.GivePickaxe;
-import fr.yarkis.plugintest.commands.GiveTotem;
+import fr.yarkis.plugintest.commands.*;
 import fr.yarkis.plugintest.listeners.*;
 
 public class Main extends JavaPlugin {
@@ -40,6 +35,10 @@ public class Main extends JavaPlugin {
 		
 		// Explosion des creepers
 		getServer().getPluginManager().registerEvents(new DisablingCreepersExplosion(), this);
+		
+		// Black Hole
+		this.getCommand("blackhole").setExecutor(new GiveBlackHole());
+		getServer().getPluginManager().registerEvents(new BlackHole(this), this);
 		
 		System.out.println("Plugin start");
 	}
