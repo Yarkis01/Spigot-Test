@@ -40,6 +40,9 @@ public class Main extends JavaPlugin {
 		this.getCommand("blackhole").setExecutor(new GiveBlackHole());
 		getServer().getPluginManager().registerEvents(new BlackHole(this), this);
 		
+		// Tnt++
+		getServer().getPluginManager().registerEvents(new TntPlusPlus(this), this);
+		
 		System.out.println("Plugin start");
 	}
 	
