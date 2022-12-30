@@ -1,5 +1,6 @@
 package fr.yarkis.plugintest;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.yarkis.plugintest.commands.*;
@@ -43,11 +44,15 @@ public class Main extends JavaPlugin {
 		// Tnt++
 		getServer().getPluginManager().registerEvents(new TntPlusPlus(this), this);
 		
-		System.out.println("Plugin start");
+		// Gun qui fait piou piou
+		this.getCommand("gun").setExecutor(new GiveGun());
+		getServer().getPluginManager().registerEvents(new Gun(this), this);
+		
+		Bukkit.getLogger().info("Le plugin vient d'arriver pour exploser ton monde ;)");
 	}
 	
 	@Override
 	public void onDisable() {
-		System.out.println("Plugin stop");
+		Bukkit.getLogger().info("Le plugin vient de se casser");
 	}
 }

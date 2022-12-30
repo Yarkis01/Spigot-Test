@@ -26,3 +26,6 @@ commands:
    blackhole:
       description: Donne l'objet pour faire spawn un trou noir
       usage: /<command>
+   gun:
+      description: Un pistolet qui fait piou piou
+      usage: /<command>
