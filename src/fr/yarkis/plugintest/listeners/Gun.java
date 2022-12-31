@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -22,7 +24,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.yarkis.plugintest.Main;
 
 public class Gun implements Listener {
-	private List<Integer> bullets 			 = new ArrayList<>();
+	private List<Snowball> bullets 			 = new ArrayList<>();
 	private List<Player> players_need_reload = new ArrayList<>();
 	
 	private Main plugin;
@@ -31,7 +33,7 @@ public class Gun implements Listener {
 		this.plugin = main;
 		
 		new BukkitRunnable() {
-			
+
 			@Override
 			public void run() {
 				for(Iterator<Player> iterator = players_need_reload.iterator(); iterator.hasNext();) {
@@ -53,6 +55,18 @@ public class Gun implements Listener {
 							item.setItemMeta((ItemMeta)meta);
 						}
 					}
+				}
+			}
+		}.runTaskTimer(plugin, 0, 1);
+		
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				for(Iterator<Snowball> iterator = bullets.iterator(); iterator.hasNext();) {
+					Snowball snowball = iterator.next();
+					
+					snowball.getWorld().spawnParticle(Particle.FLAME, snowball.getLocation(), 2);
 				}
 			}
 		}.runTaskTimer(plugin, 0, 1);
@@ -96,7 +110,7 @@ public class Gun implements Listener {
 					Snowball bullet = player.launchProjectile(Snowball.class);
 					bullet.setVelocity(player.getLocation().getDirection().multiply(2.0D));
 					
-					bullets.add(bullet.getEntityId());
+					bullets.add(bullet);
 				} else {
 					player.sendMessage(ChatColor.RED + "Vous n'avez plus de munition !");
 				}
@@ -109,11 +123,20 @@ public class Gun implements Listener {
 		if(event.getEntityType() == EntityType.SNOWBALL) {
 			Snowball bullet = (Snowball)event.getEntity();
 			
-			if(bullets.contains(bullet.getEntityId())) {
-				bullets.remove(bullets.indexOf(bullet.getEntityId()));
+			if(bullets.contains(bullet)) {
+				bullets.remove(bullets.indexOf(bullet));
 				
-				bullet.getWorld().createExplosion(bullet.getLocation().getX(), bullet.getLocation().getY(), bullet.getLocation().getZ(), 8.0f, false, false);
+				bullet.getWorld().createExplosion(bullet.getLocation().getX(), bullet.getLocation().getY(), bullet.getLocation().getZ(), 16.0f, false, false);
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onItemDrop(PlayerDropItemEvent event) {
+		ItemStack item = event.getItemDrop().getItemStack();
+		
+		if(item.getItemMeta().getDisplayName() != null && item.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Piou Piou")) {
+			event.setCancelled(true);
 		}
 	}
 	
